@@ -1,8 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Optional small custom rule to ensure body scroll works */
-html, body, #root {
-  height: 100%;
-}
