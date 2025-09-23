@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import AboutUs from './AboutUs';
+import ProductList from './ProductList';
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
       <div className="w-screen h-screen overflow-hidden">
 
         {/*landing Page */}
-        <div className={`relative w-screen h-screen transition-opacity duration-500`}>
+        <div className={`relative w-screen h-screen ${showProductList ? 'opacity-0' : 'opacity-100'} not-only-of-type:transition-opacity duration-500`}>
 
           {/*Background*/}
           <div className="absolute inset-0 bg-cover bg-center brightness-75 bg-[url('https://cdn.pixabay.com/photo/2017/07/13/08/59/greenhouse-2499758_1280.jpg')]"></div>
@@ -38,6 +39,11 @@ function App() {
                 <AboutUs />
               </div>
             </div>
+        </div>
+        <div className={`absolute left-0 w-full h-screen bg-white/90 backdrop-blur-md transition-all duration-500 overflow-y-auto z-20 ${
+          showProductList ? 'top-0' : 'top-[100vh]'
+        }`}>
+          <ProductList onHomeClick={handleHomeClick} />
         </div>
       </div>    
     </>
