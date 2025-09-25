@@ -15,10 +15,10 @@ function App() {
  
   return (
     <>
-      <div className="w-screen h-screen overflow-hidden">
+      <div className="relative w-screen h-screen overflow-hidden">
 
         {/*landing Page */}
-        <div className={`relative w-screen h-screen ${showProductList ? 'opacity-0' : 'opacity-100'} not-only-of-type:transition-opacity duration-500`}>
+        <div className={`absolute w-screen h-screen ${showProductList ? 'opacity-0' : 'opacity-100'}`}>
 
           {/*Background*/}
           <div className="absolute inset-0 bg-cover bg-center brightness-75 bg-[url('https://cdn.pixabay.com/photo/2017/07/13/08/59/greenhouse-2499758_1280.jpg')]"></div>

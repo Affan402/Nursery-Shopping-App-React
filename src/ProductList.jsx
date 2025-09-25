@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import { addItem } from "./CartSlice";
+import { useDispatch } from "react-redux";
 
 function ProductList({onHomeClick}) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false);
+    const [addedToCart, setAddedToCart] = useState({});
+    const dispatch = useDispatch();
 
     const plantsArray = [
         {
@@ -229,7 +233,13 @@ function ProductList({onHomeClick}) {
         e.preventDefault();
         setShowCart(false);
     }
-
+    const handleAddToCart = (product) =>{
+        dispatch(addItem(product)) //Dispatch the action to add to the cart
+        setAddedToCart((prevState) => ({
+            ...prevState,
+            [product.name]:true,
+        }));
+    } 
     return (
         <div>
             {/*Navbar*/}
@@ -246,7 +256,7 @@ function ProductList({onHomeClick}) {
                     </div>
                 </div>
                 <div className="flex justify-between items-center mx-auto max-w-[1100px] w-full">
-                    <div>
+                    <div className="flex justify-center md:ml-100">
                         <a href="#" className="text-white text-[30px] no-underline" onClick={(e) => handlePlantsClick(e)}>Plants</a>
                     </div>
                     <div>
@@ -266,8 +276,30 @@ function ProductList({onHomeClick}) {
 
             {/* Content OR Cart */}
             {!showCart ? (
-                <div className="">
-
+                <div className="product-grid flex flex-col w-full items-center justify-center">
+                    {plantsArray.map((category, index) => (  //Plants Category
+                        <div key={index} className="mb-12 w-full">
+                            <h1>
+                                <div className="text-2xl md:text-3xl font-semibold mb-6 text-center">{category.category}</div>
+                            </h1>
+                            <div className="product-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-5 w-full items-center justify-center">
+                                {category.plants.map((plant, plantIndex) => (  //Plants list/Cards
+                                    <div key={plantIndex} className={"product-card relative h-103 w-full bg-white border border-gray-200 rounded-md text-center p-5 overflow-hidden " + "shadow-sm hover:shadow-lg transform hover:scale-105 transition-transform duration-300 " +
+                                        "before:content-['SALE'] before:absolute before:top-0 before:right-0 before:bg-red-600 before:text-white before:text-xs before:px-2 before:py-1 before:rounded-bl-md "
+                                    }>
+                                        <img src={plant.image} alt={plant.name} 
+                                        className="w-full h-[200px] object-cover rounded-md"/>
+                                        <div className="title text-lg font-bold mt-3 mb-2 ">{plant.name}</div>
+                                        <div className="descrip text-sm text-gray-600 mb-3">{plant.description}</div>
+                                        <div className="cost text-red-600 text-lg font-semibold mb-3">{ plant.cost}</div>
+                                        <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors " onClick={() => handleAddToCart(plant)}>
+                                            Add to Cart
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             ) : (
                 <CartItem />
