@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { addItem } from "./CartSlice";
 import { useDispatch } from "react-redux";
+import CartItem from "./CartItem";
 
 function ProductList({onHomeClick}) {
     const [showCart, setShowCart] = useState(false);
@@ -280,7 +281,8 @@ function ProductList({onHomeClick}) {
                     {plantsArray.map((category, index) => (  //Plants Category
                         <div key={index} className="mb-12 w-full">
                             <h1>
-                                <div className="text-2xl md:text-3xl font-semibold mb-6 text-center">{category.category}</div>
+                                <div className="text-2xl md:text-3xl font-semibold mb-6 text-center mt-6">
+                                    {category.category}</div>
                             </h1>
                             <div className="product-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-5 w-full items-center justify-center">
                                 {category.plants.map((plant, plantIndex) => (  //Plants list/Cards
@@ -292,7 +294,7 @@ function ProductList({onHomeClick}) {
                                         <div className="title text-lg font-bold mt-3 mb-2 ">{plant.name}</div>
                                         <div className="descrip text-sm text-gray-600 mb-3">{plant.description}</div>
                                         <div className="cost text-red-600 text-lg font-semibold mb-3">{ plant.cost}</div>
-                                        <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors " onClick={() => handleAddToCart(plant)}>
+                                        <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors cursor-pointer " onClick={() => handleAddToCart(plant)}>
                                             Add to Cart
                                         </button>
                                     </div>
@@ -302,7 +304,7 @@ function ProductList({onHomeClick}) {
                     ))}
                 </div>
             ) : (
-                <CartItem />
+                <CartItem onContinueShopping={handleContinueShopping} />
             )}
         </div>
     )
