@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { addItem } from "./CartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartItem from "./CartItem";
 
 function ProductList({onHomeClick}) {
@@ -8,6 +8,9 @@ function ProductList({onHomeClick}) {
     const [showPlants, setShowPlants] = useState(false);
     const [addedToCart, setAddedToCart] = useState({});
     const dispatch = useDispatch();
+    const cart = useSelector((state) => state.cart.items);
+    const cartCount = cart.reduce((total, item) => total + (item.quantity ?? 1), 0);
+    const cartCountDiplay = cartCount > 99 ? "99+" : String(cartCount);
 
     const plantsArray = [
         {
@@ -219,7 +222,7 @@ function ProductList({onHomeClick}) {
 
     const handleHomeClick = (e) => {
         e.preventDefault();
-        onHomeClick;
+        onHomeClick(e);
     };
     const handleCartClick = (e) => {
         e.preventDefault();
@@ -269,6 +272,9 @@ function ProductList({onHomeClick}) {
                                     <circle cx="184" cy="216" r="12"></circle>
                                     <path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" id="mainIconPathAttribute"></path>
                                 </svg>
+                                <span className="absolute top-8 right-9.5 text-white text-[19px] font-bold px-2 py-[2px] rounded-full shadow-md">
+                                    {cartCountDiplay}
+                                </span>
                             </h1>
                         </a>
                     </div>
@@ -294,8 +300,10 @@ function ProductList({onHomeClick}) {
                                         <div className="title text-lg font-bold mt-3 mb-2 ">{plant.name}</div>
                                         <div className="descrip text-sm text-gray-600 mb-3">{plant.description}</div>
                                         <div className="cost text-red-600 text-lg font-semibold mb-3">{ plant.cost}</div>
-                                        <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors cursor-pointer " onClick={() => handleAddToCart(plant)}>
-                                            Add to Cart
+                                        <button 
+                                        disabled={cart.some(item => item.name === plant.name)}
+                                        className= {`text-white px-4 py-2 rounded cursor-pointer transition-colors ${cart.some(item => item.name === plant.name) ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700" }`}  onClick={() => handleAddToCart(plant)}>
+                                            {cart.some(item => item.name === plant.name) ? "Added to Cart" : "Add to Cart"}
                                         </button>
                                     </div>
                                 ))}
