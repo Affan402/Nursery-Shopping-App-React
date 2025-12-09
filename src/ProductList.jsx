@@ -272,7 +272,7 @@ function ProductList({onHomeClick}) {
                                     <circle cx="184" cy="216" r="12"></circle>
                                     <path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" id="mainIconPathAttribute"></path>
                                 </svg>
-                                <span className="absolute top-8 right-9.5 text-white text-[19px] font-bold px-2 py-[2px] rounded-full shadow-md">
+                                <span className="relative bottom-0.5 right-11.5 text-white text-[19px] font-bold px-2 py-[0.25px] rounded-full shadow-md">
                                     {cartCountDiplay}
                                 </span>
                             </h1>
@@ -292,7 +292,7 @@ function ProductList({onHomeClick}) {
                             </h1>
                             <div className="product-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-5 w-full items-center justify-center">
                                 {category.plants.map((plant, plantIndex) => (  //Plants list/Cards
-                                    <div key={plantIndex} className={"product-card relative h-103 w-full bg-white border border-gray-200 rounded-md text-center p-5 overflow-hidden " + "shadow-sm hover:shadow-lg transform hover:scale-105 transition-transform duration-300 " +
+                                    <div key={plantIndex} className={"product-card relative h-103 w-full bg-white border border-gray-200 rounded-md text-center p-2 overflow-hidden " + "shadow-sm hover:shadow-lg transform hover:scale-105 transition-transform duration-300 " +
                                         "before:content-['SALE'] before:absolute before:top-0 before:right-0 before:bg-red-600 before:text-white before:text-xs before:px-2 before:py-1 before:rounded-bl-md "
                                     }>
                                         <img src={plant.image} alt={plant.name} 
